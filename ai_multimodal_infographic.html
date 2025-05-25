@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tools Capabilities Comparison</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8fafc;
+            padding: 20px;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .page-header {
+            background-color: #3b82f6;
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .table-wrapper {
+            padding: 30px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .data-table thead th {
+            background-color: #1f2937;
+            color: white;
+            padding: 18px 12px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .data-table thead th:first-child {
+            text-align: left;
+            width: 20%;
+        }
+
+        .data-table thead th:not(:first-child) {
+            width: 16%;
+        }
+
+        .data-table tbody td {
+            padding: 14px 10px;
+            text-align: center;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.85rem;
+        }
+
+        .data-table tbody td:first-child {
+            text-align: left;
+            background-color: #f8f9fa;
+            font-weight: 600;
+            border-right: 2px solid #e5e7eb;
+        }
+
+        .score {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 5px;
+            color: #1f2937;
+        }
+
+        .details {
+            font-size: 0.75rem;
+            color: #6b7280;
+            line-height: 1.3;
+        }
+
+        .level-excellent { 
+            background-color: #dcfce7; 
+        }
+
+        .level-good { 
+            background-color: #dbeafe; 
+        }
+
+        .level-basic { 
+            background-color: #fef3c7; 
+        }
+
+        .level-none { 
+            background-color: #f3f4f6;
+            color: #9ca3af;
+        }
+
+        .color-guide {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            padding: 24px;
+            background-color: #f9fafb;
+            flex-wrap: wrap;
+        }
+
+        .guide-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .color-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-excellent {
+            background-color: #dcfce7;
+            border: 2px solid #16a34a;
+        }
+
+        .dot-good {
+            background-color: #dbeafe;
+            border: 2px solid #2563eb;
+        }
+
+        .dot-basic {
+            background-color: #fef3c7;
+            border: 2px solid #d97706;
+        }
+
+        .dot-none {
+            background-color: #f3f4f6;
+            border: 2px solid #9ca3af;
+        }
+
+        .summary-section {
+            background-color: #1f2937;
+            color: white;
+            padding: 50px 30px;
+            text-align: center;
+        }
+
+        .summary-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 30px;
+            margin-bottom: 40px;
+        }
+
+        .insight-card {
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 24px;
+            border-radius: 12px;
+            border-left: 4px solid #3b82f6;
+            text-align: left;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-2px);
+            background-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .insight-title {
+            display: block;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+
+        .insight-text {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+
+        .sharing-section {
+            background-color: #f8fafc;
+            padding: 40px 30px;
+            text-align: center;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .sharing-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 20px;
+        }
+
+        .sharing-options {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .share-button {
+            background-color: #3b82f6;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background-color 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .share-button:hover {
+            background-color: #2563eb;
+        }
+
+        .share-button.secondary {
+            background-color: white;
+            color: #1f2937;
+            border: 2px solid #e5e7eb;
+        }
+
+        .share-button.secondary:hover {
+            background-color: #f9fafb;
+            border-color: #d1d5db;
+        }
+
+        .share-instructions {
+            font-size: 0.85rem;
+            color: #6b7280;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .data-table {
+                font-size: 0.75rem;
+            }
+            
+            .data-table thead th,
+            .data-table tbody td {
+                padding: 10px 6px;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .color-guide {
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="page-header">
+            <h1>AI Tools Capabilities Comparison</h1>
+            <p>Compare what each AI platform can actually create beyond text</p>
+        </div>
+
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Capability</th>
+                        <th>Google Gemini</th>
+                        <th>ChatGPT</th>
+                        <th>Claude</th>
+                        <th>Microsoft Copilot</th>
+                        <th>Perplexity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>🎧 <strong>Podcasts</strong><br><small>AI-generated audio conversations</small></td>
+                        <td class="level-excellent"><div class="score">★★★</div><div class="details">NotebookLM Audio Overview</div></td>
+                        <td class="level-none"><div class="score">✗</div><div class="details">Text conversations only</div></td>
+                        <td class="level-none"><div class="score">✗</div><div class="details">No audio generation</div></td>
+                        <td class="level-none"><div class="score">✗</div><div class="details">No audio generation</div></td>
+                        <td class="level-none"><div class="score">✗</div><div class="details">Research focused</div></td>
+                    </tr>
+                    <tr>
+                        <td>🎨 <strong>Images</strong><br><small>Create and edit images from text</small></td>
+                        <td class="level-good"><div class="score">★★</div><div class="details">Imagen 4 generation</div></td>
+                        <td class="level-excellent"><div class="score">★★★</div><div class="details">DALL-E integration</div></td>
+                        <td class="level-none"><div class="score">✗</div><div class="details">Cannot generate images</div></td>
+                        <td class="level-basic"><div class="score">★</div><div class="details">Limited image features</div></td>
+                        <td class="level-none"><div class="score">✗</div><div class="details">Text/research only</div></td>
+                    </tr>
+                    <tr>
+                        <td>📊 <strong>Dashboards</strong><br><small>Interactive data visualizations</small></td>
+                        <td class="level-basic"><div class="score">★</div><div class="details">Google Sheets charts</div></td>
+                        <td class="level-basic"><div class="score">★</div><div class="details">Code generation only</div></td>
+                        <td class="level-excellent"><div class="score">★★★</div><div class="details">Interactive Artifacts</div></td>
+                        <td class="level-good"><div class="score">★★</div><div class="details">Excel/Power BI native</div></td>
+                        <td class="level-none"><div class="score">✗</div><div class="details">No data visualization</div></td>
+                    </tr>
+                    <tr>
+                        <td>🎬 <strong>Videos</strong><br><small>Professional video generation</small></td>
+                        <td class="level-excellent"><div class="score">★★★</div><div class="details">Veo 2/3 cinematic</div></td>
+                        <td class="level-none"><div class="score">✗</div><div class="details">No video generation</div></td>
+                        <td class="level-none"><div class="score">✗</div><div class="details">No video generation</div></td>
+                        <td class="level-none"><div class="score">✗</div><div class="details">No video generation</div></td>
+                        <td class="level-none"><div class="score">✗</div><div class="details">No video generation</div></td>
+                    </tr>
+                    <tr>
+                        <td>💻 <strong>Web Apps</strong><br><small>Interactive applications & games</small></td>
+                        <td class="level-basic"><div class="score">★</div><div class="details">Basic web apps</div></td>
+                        <td class="level-good"><div class="score">★★</div><div class="details">Canvas collaboration</div></td>
+                        <td class="level-excellent"><div class="score">★★★</div><div class="details">Live preview Artifacts</div></td>
+                        <td class="level-good"><div class="score">★★</div><div class="details">Office app integration</div></td>
+                        <td class="level-none"><div class="score">✗</div><div class="details">Search tool only</div></td>
+                    </tr>
+                    <tr>
+                        <td>🔍 <strong>Research</strong><br><small>Deep analysis with sources</small></td>
+                        <td class="level-excellent"><div class="score">★★★</div><div class="details">Deep Research mode</div></td>
+                        <td class="level-good"><div class="score">★★</div><div class="details">Web search & analysis</div></td>
+                        <td class="level-basic"><div class="score">★</div><div class="details">Large context analysis</div></td>
+                        <td class="level-basic"><div class="score">★</div><div class="details">Bing integration</div></td>
+                        <td class="level-excellent"><div class="score">★★★</div><div class="details">Real-time citations</div></td>
+                    </tr>
+                    <tr>
+                        <td>📊 <strong>Slides</strong><br><small>Presentation creation & design</small></td>
+                        <td class="level-good"><div class="score">★★</div><div class="details">Google Slides integration</div></td>
+                        <td class="level-basic"><div class="score">★</div><div class="details">Content generation</div></td>
+                        <td class="level-basic"><div class="score">★</div><div class="details">Presentation content</div></td>
+                        <td class="level-excellent"><div class="score">★★★</div><div class="details">Native PowerPoint</div></td>
+                        <td class="level-basic"><div class="score">★</div><div class="details">Research for slides</div></td>
+                    </tr>
+                    <tr>
+                        <td>✍️ <strong>Copywriting/Writing</strong><br><small>Content creation & writing assistance</small></td>
+                        <td class="level-good"><div class="score">★★</div><div class="details">Good content generation</div></td>
+                        <td class="level-excellent"><div class="score">★★★</div><div class="details">Versatile writing & editing</div></td>
+                        <td class="level-excellent"><div class="score">★★★</div><div class="details">Exceptional prose quality</div></td>
+                        <td class="level-good"><div class="score">★★</div><div class="details">Office document writing</div></td>
+                        <td class="level-basic"><div class="score">★</div><div class="details">Research-based writing</div></td>
+                    </tr>
+                    <tr>
+                        <td>💻 <strong>Coding</strong><br><small>Programming assistance & development</small></td>
+                        <td class="level-basic"><div class="score">★</div><div class="details">Good coding support</div></td>
+                        <td class="level-good"><div class="score">★★</div><div class="details">Strong code generation</div></td>
+                        <td class="level-excellent"><div class="score">★★★</div><div class="details">Live preview coding</div></td>
+                        <td class="level-good"><div class="score">★★</div><div class="details">GitHub/VS Code integration</div></td>
+                        <td class="level-basic"><div class="score">★</div><div class="details">Basic coding help</div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="color-guide">
+            <div class="guide-item">
+                <div class="color-dot dot-excellent"></div>
+                <span>Excellent (3★)</span>
+            </div>
+            <div class="guide-item">
+                <div class="color-dot dot-good"></div>
+                <span>Good (2★)</span>
+            </div>
+            <div class="guide-item">
+                <div class="color-dot dot-basic"></div>
+                <span>Basic (1★)</span>
+            </div>
+            <div class="guide-item">
+                <div class="color-dot dot-none"></div>
+                <span>Not Available</span>
+            </div>
+        </div>
+
+        <div class="summary-section">
+            <h3 class="summary-title">🏆 Key Takeaways & Strategic Insights</h3>
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <strong class="insight-title">🎧 Audio Content Monopoly</strong>
+                    <p class="insight-text"><strong>Google Gemini</strong> is the only platform creating actual podcast audio.</p>
+                    <ul style="margin-top: 12px; padding-left: 16px; opacity: 0.9;">
+                        <li>50+ language support with realistic AI host conversations</li>
+                        <li>Converts documents, PDFs, and YouTube videos into podcasts</li>
+                        <li>Essential for content creators needing audio formats</li>
+                    </ul>
+                </div>
+                <div class="insight-card">
+                    <strong class="insight-title">🎨 Visual Content Leadership</strong>
+                    <p class="insight-text"><strong>ChatGPT</strong> dominates image generation and editing.</p>
+                    <ul style="margin-top: 12px; padding-left: 16px; opacity: 0.9;">
+                        <li>DALL-E integration with advanced editing capabilities</li>
+                        <li>Text overlays and transparent background creation</li>
+                        <li>Perfect for social media and marketing visuals</li>
+                    </ul>
+                </div>
+                <div class="insight-card">
+                    <strong class="insight-title">📊 Interactive Development Champion</strong>
+                    <p class="insight-text"><strong>Claude</strong> revolutionizes data visualization with live previews.</p>
+                    <ul style="margin-top: 12px; padding-left: 16px; opacity: 0.9;">
+                        <li>Artifacts feature creates interactive dashboards instantly</li>
+                        <li>Real-time coding preview and web app development</li>
+                        <li>Shareable URLs for collaborative projects</li>
+                    </ul>
+                </div>
+                <div class="insight-card">
+                    <strong class="insight-title">🎬 Video Generation Pioneer</strong>
+                    <p class="insight-text"><strong>Google Gemini</strong> stands alone in professional video creation.</p>
+                    <ul style="margin-top: 12px; padding-left: 16px; opacity: 0.9;">
+                        <li>Veo 2/3 models offer cinematic quality output</li>
+                        <li>Realistic physics and advanced camera controls</li>
+                        <li>Game-changer for video marketing and content production</li>
+                    </ul>
+                </div>
+                <div class="insight-card">
+                    <strong class="insight-title">✍️ Writing Excellence Split</strong>
+                    <p class="insight-text"><strong>Claude</strong> for prose quality, <strong>ChatGPT</strong> for versatility.</p>
+                    <ul style="margin-top: 12px; padding-left: 16px; opacity: 0.9;">
+                        <li>Claude: Superior for nuanced, high-quality writing</li>
+                        <li>ChatGPT: Better for editing and diverse writing styles</li>
+                        <li>Choose based on quality vs. volume needs</li>
+                    </ul>
+                </div>
+                <div class="insight-card">
+                    <strong class="insight-title">🔍 Research Powerhouses</strong>
+                    <p class="insight-text"><strong>Perplexity</strong> and <strong>Google Gemini</strong> lead research capabilities.</p>
+                    <ul style="margin-top: 12px; padding-left: 16px; opacity: 0.9;">
+                        <li>Perplexity: Real-time citations and source verification</li>
+                        <li>Google Gemini: Comprehensive Deep Research mode</li>
+                        <li>Both essential for fact-based and academic content</li>
+                    </ul>
+                </div>
+                <div class="insight-card">
+                    <strong class="insight-title">💼 Enterprise Integration</strong>
+                    <p class="insight-text"><strong>Microsoft Copilot</strong> for business, <strong>Claude</strong> for development.</p>
+                    <ul style="margin-top: 12px; padding-left: 16px; opacity: 0.9;">
+                        <li>Copilot: Native Office integration and PowerPoint mastery</li>
+                        <li>Claude: Superior coding with live preview capabilities</li>
+                        <li>GitHub integration makes Copilot strong for developers too</li>
+                    </ul>
+                </div>
+                <div class="insight-card">
+                    <strong class="insight-title">🎯 Strategic Recommendation</strong>
+                    <p class="insight-text">Multi-platform approach beats single-tool strategy.</p>
+                    <ul style="margin-top: 12px; padding-left: 16px; opacity: 0.9;">
+                        <li>No single AI dominates all categories</li>
+                        <li>Combine tools based on specific use cases</li>
+                        <li>Budget for 2-3 subscriptions for optimal coverage</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="sharing-section">
+            <h3 class="sharing-title">📤 How to Share This Dashboard</h3>
+            <div class="sharing-options">
+                <button class="share-button" onclick="copyToClipboard()">📋 Copy Current Link</button>
+                <button class="share-button secondary" onclick="printPage()">📄 Save as PDF</button>
+                <button class="share-button secondary" onclick="downloadAsImage()">📸 Screenshot Guide</button>
+                <a href="https://twitter.com/intent/tweet?text=AI%20Tools%20Capabilities%20Comparison%20-%20See%20which%20AI%20excels%20at%20what%21" class="share-button" target="_blank">🐦 Tweet About It</a>
+            </div>
+            <div style="background: #f8f9fa; border-radius: 8px; padding: 20px; margin-top: 20px; text-align: left;">
+                <h4 style="margin: 0 0 12px 0; color: #1f2937;">💡 Best Sharing Methods:</h4>
+                <ul style="margin: 0; color: #4b5563; font-size: 0.9rem; line-height: 1.6;">
+                    <li><strong>For immediate sharing:</strong> Copy the current link</li>
+                    <li><strong>For permanent reference:</strong> Save as PDF using Ctrl/Cmd+P</li>
+                    <li><strong>For presentations:</strong> Take a screenshot of the full page</li>
+                    <li><strong>For social media:</strong> Screenshot individual sections + your insights</li>
+                    <li><strong>For teams:</strong> Save as PDF and upload to your shared drive</li>
+                </ul>
+            </div>
+        </div>
+
+        <script>
+        function copyToClipboard() {
+            navigator.clipboard.writeText(window.location.href).then(function() {
+                const button = event.target;
+                const originalText = button.textContent;
+                button.textContent = '✅ Link Copied!';
+                button.style.backgroundColor = '#10b981';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.backgroundColor = '#3b82f6';
+                }, 2500);
+            });
+        }
+
+        function downloadAsImage() {
+            alert('📸 Screenshot Guide:\n\n1. Use Ctrl/Cmd + Shift + S for browser screenshot tool\n2. Or right-click → "Save page as" → "Webpage, Complete"\n3. For mobile: Use your device\'s screenshot feature\n4. Crop to focus on specific sections as needed');
+        }
+
+        function printPage() {
+            window.print();
+        }
+        </script>
+    </div>
+</body>
+</html>
